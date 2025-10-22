@@ -2,7 +2,7 @@
 
 use App\Product;
 
-$searchQuery = $_GET['search'] ?? '';
+$searchQuery = $_GET['keyword'] ?? '';
 
 if (!empty($searchQuery)) {
     try {
