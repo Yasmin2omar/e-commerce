@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = $review->addReview($product_id, $user_id, $name, $email, $rating, $comment);
 
         if ($success) {
-            $_SESSION['success'] = " Review added successfully!";
+            $_SESSION['review_success'] = "Review added successfully!";
+
         } else {
             $_SESSION['error'] = " Failed to add your review.";
         }
@@ -36,6 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
   
-    header("Location: ./index.php?page=product-details&id=$product_id");
+    header("Location: index.php?page=product-details&id=$product_id");
     exit;
 }

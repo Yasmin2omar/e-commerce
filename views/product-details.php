@@ -4,6 +4,7 @@ require_once __DIR__ . "./layouts/header.php";
 use App\Category;
 use App\Product;
 use App\Controllers\ProductDetails_controller;
+use App\ErrorMessage;
 use App\Review;
 
 if (isset($_GET['id'])) {
@@ -106,7 +107,7 @@ $reviewCount = count($reviews);
                             <label>quantity</label>
                             <input min="1" max="100" value="1" type="number">
                             <input name="product-id" type="hidden" value="<?=$id?>">
-                            <?php if ($product->getStock()=='In Stock'): ?>
+                            <?php if ($product->getStock()=='In Stock'&& isset($_SESSION['user'])): ?>
                             <button class="button" type="submit" name="add">add to cart</button>
                             <?php else: ?>
                             <?php endif; ?>
@@ -136,6 +137,10 @@ $reviewCount = count($reviews);
             <div class="col-12">
                 <div class="product_d_inner">
                     <div class="product_info_button">
+                        <?php if (isset($_SESSION['review_success'])): ?>
+                                <div class="alert alert-success"><?= $_SESSION['review_success'] ?></div>
+                                <?php unset($_SESSION['review_success']); ?>
+                            <?php endif; ?>
                         <ul class="nav" role="tablist">
                             <li>
                                 <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info"
@@ -182,8 +187,9 @@ $reviewCount = count($reviews);
                                 </table>
                             </div>
                         </div>
-
+                            
                         <div class="tab-pane fade" id="reviews" role="tabpanel">
+                            
                             <div class="reviews_wrapper">
                                 <h4><?= $reviewCount ?> <?= $reviewCount == 1 ? 'Review' : 'Reviews' ?> For
                                     <?=$product->getName()?></h4>
@@ -256,4 +262,4 @@ $reviewCount = count($reviews);
 </div>
 
 <!--footer area start-->
-<?php require_once __DIR__ . "./layouts/footer.php"; ?>
+<?php require_once __DIR__ . "./layouts/footer.php"?>
